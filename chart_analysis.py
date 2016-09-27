@@ -65,7 +65,7 @@ def select_frame():
         
         if (lyrics.value != ""):
 
-                mask = selected['Lyrics'].str.lower().str.contains(lyrics.value.strip().lower())
+                mask = selected['Lyrics'].str.lower().str.contains(lyrics.value.lower())
                 selected.loc[mask, 'Colour'] = 'blue'
                 selected.loc[mask, 'Alpha']  = 0.8
                 selected.loc[~mask, 'Colour'] = 'gray'
@@ -73,7 +73,7 @@ def select_frame():
 
         if (artist.value != ""):
 
-                mask = selected['Artist'].str.lower().str.contains(artist.value.strip().lower())
+                mask = selected['Artist'].str.lower().str.contains(artist.value.lower())
                 selected.loc[mask, 'Colour'] = 'red'
                 selected.loc[mask, 'Alpha']  = 0.8
                 selected.loc[~mask, 'Colour'] = 'gray'
