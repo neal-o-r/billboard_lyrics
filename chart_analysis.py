@@ -16,6 +16,7 @@ df['N_Words'] = df.Words.apply(lambda x: len(x) if type(x) == list else None)
 df = df[df.N_Words > 1]
 
 
+df['Size'] = 7
 df['Colour'] = "olive"
 df['Alpha'] = [0.8] * len(df)
 
@@ -33,7 +34,7 @@ artist = TextInput(title="Search for Artist (matches red)")
 
 
 # Create Column Data Source that will be used by the plot
-source = ColumnDataSource(data=dict(x=[], y=[], artist=[], colour=[], song=[], year=[], rank=[], alpha=[]))
+source = ColumnDataSource(data=dict(x=[], y=[], artist=[], colour=[], song=[], year=[], rank=[], alpha=[], size=[]))
 
 hover = HoverTool(tooltips=[
     ("Title", "@song"),
@@ -43,7 +44,7 @@ hover = HoverTool(tooltips=[
 ])
 
 p = figure(plot_height=800, plot_width=1000, title="", toolbar_location=None, tools=[hover])
-p.circle(x="x", y="y", source=source, size=7, color="colour", line_color=None, fill_alpha="alpha")
+p.circle(x="x", y="y", source=source, size="size", color="colour", line_color=None, fill_alpha="alpha")
 p.yaxis.axis_label = "Lyrics Word Count"
 p.xaxis.axis_label = "Year"
 
@@ -68,6 +69,7 @@ def select_frame():
                 mask = selected['Lyrics'].str.lower().str.contains(lyrics.value.lower())
                 selected.loc[mask, 'Colour'] = 'blue'
                 selected.loc[mask, 'Alpha']  = 0.8
+                selected.loc[mask, 'Size'] = 10
                 selected.loc[~mask, 'Colour'] = 'gray'
                 selected.loc[~mask, 'Alpha'] = 0.4
 
@@ -76,6 +78,7 @@ def select_frame():
                 mask = selected['Artist'].str.lower().str.contains(artist.value.lower())
                 selected.loc[mask, 'Colour'] = 'red'
                 selected.loc[mask, 'Alpha']  = 0.8
+                selected.loc[mask, 'Size'] = 10
                 selected.loc[~mask, 'Colour'] = 'gray'
                 selected.loc[~mask, 'Alpha'] = 0.4
 
@@ -98,6 +101,7 @@ def update():
                 year=df_plot["Year"],
                 rank=df_plot["Rank"],
                 alpha=df_plot["Alpha"],
+                size=df_plot["Size"],
         )
                 
 
